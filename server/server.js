@@ -2,7 +2,9 @@ require("./config/config");
 
 const express = require("express");
 const mongoose = require("mongoose");
+const morgan = require("morgan");
 const path = require("path");
+const cors = require("cors");
 
 const app = express();
 
@@ -18,7 +20,10 @@ app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, "../public")));
 
 // Configuración global de rutas
-app.use(require("./routes/index"));
+app.use("/api", require("./routes/index"));
+
+app.use(cors());
+app.use(morgan("tiny"));
 
 mongoose.connect(process.env.URLDB, (err, res) => {
   if (err) throw err;
