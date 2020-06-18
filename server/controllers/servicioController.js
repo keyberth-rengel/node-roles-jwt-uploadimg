@@ -23,7 +23,7 @@ const createServicio = async (req, res) => {
 
     res.status(201).json({
       ok: true,
-      servicio: servicioDB,
+      data: servicioDB,
       message: "El Servicio se creo con exito",
     });
   });
@@ -39,7 +39,7 @@ const fetchServiciosAll = async (req, res) => {
 
   await Servicio.find({ disponible: true })
     .skip(desde)
-    .limit(5)
+    // .limit(5)
     .exec((err, servicios) => {
       if (err) {
         return res.status(500).json({
@@ -50,7 +50,7 @@ const fetchServiciosAll = async (req, res) => {
 
       res.json({
         ok: true,
-        servicios,
+        data: servicios,
       });
     });
 };
@@ -83,7 +83,7 @@ const fecthServicioID = async (req, res) => {
 
     res.json({
       ok: true,
-      servicio: servicioDB,
+      data: servicioDB,
     });
   });
 };
@@ -115,10 +115,17 @@ const updateServicio = async (req, res) => {
       });
     }
 
-    servicioDB.categoria = body.categoria;
-    servicioDB.subCategoria = body.subcategoria;
-    servicioDB.precio = body.precio;
-    servicioDB.tiempo = body.tiempo;
+    servicioDB.categoria = body.categoria
+      ? body.categoria
+      : servicioDB.categoria;
+    servicioDB.subCategoria = body.subcategoria
+      ? body.subcategoria
+      : servicioDB.subcategoria;
+    servicioDB.precio = body.precio ? body.precio : servicioDB.precio;
+    servicioDB.tiempo = body.tiempo ? body.tiempo : servicioDB.tiempo;
+    servicioDB.disponible = body.disponible
+      ? body.disponible
+      : servicioDB.disponible;
 
     await servicioDB.save((err, servicioGuardado) => {
       if (err) {
@@ -130,7 +137,7 @@ const updateServicio = async (req, res) => {
 
       res.json({
         ok: true,
-        servicio: servicioGuardado,
+        data: servicioGuardado,
         message: "El Servicio se actualizo con exito",
       });
     });
@@ -172,7 +179,7 @@ const deleteServicio = async (req, res) => {
 
       res.json({
         ok: true,
-        servicio: servicioBorrado,
+        data: servicioBorrado,
         message: "El Servicio se ha eliminado con exito",
       });
     });
@@ -188,9 +195,8 @@ const searchServicio = async (req, res) => {
 
   let regex = new RegExp(termino, "i");
 
-  await Servicio.find({ subCategoria: regex })
-    .populate("servicio", "subCategoria")
-    .exec((err, servicios) => {
+  await Servicio.find({ subCategoria: regex, disponible: true }).exec(
+    (err, servicios) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -200,9 +206,10 @@ const searchServicio = async (req, res) => {
 
       res.json({
         ok: true,
-        servicios,
+        data: servicios,
       });
-    });
+    }
+  );
 };
 module.exports = {
   createServicio,

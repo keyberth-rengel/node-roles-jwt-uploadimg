@@ -26,7 +26,7 @@ let usuarioSchema = new Schema({
     type: String,
     required: false,
   },
-  vehiculo: { type: Schema.Types.ObjectId, ref: "Vehiculo", required: false },
+  vehiculo: [{ type: Schema.Types.ObjectId, ref: "Vehiculo", required: false }],
   role: {
     type: String,
     default: "USER_ROLE",

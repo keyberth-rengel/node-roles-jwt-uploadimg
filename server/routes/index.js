@@ -7,8 +7,8 @@ app.use(require("./login"));
 app.use(require("./vehiculos"));
 app.use(require("./servicio"));
 app.use(require("./usuario"));
+app.use(require("./talleres"));
 
-// app.use(require('./producto'));
 app.use(require("./upload"));
 app.use(require("./imagenes"));
 

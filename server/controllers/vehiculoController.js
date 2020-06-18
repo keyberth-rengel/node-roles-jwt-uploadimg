@@ -23,7 +23,7 @@ const createVehiculo = async (req, res) => {
 
     res.status(201).json({
       ok: true,
-      vehiculo: vehiculoDB,
+      data: vehiculoDB,
       message: "El Vehiculo se creo con exito",
     });
   });
@@ -39,7 +39,7 @@ const fetchVehiculosAll = async (req, res) => {
 
   await Vehiculo.find({ disponible: true })
     .skip(desde)
-    .limit(5)
+    // .limit(5)
     .exec((err, vehiculos) => {
       if (err) {
         return res.status(500).json({
@@ -50,7 +50,7 @@ const fetchVehiculosAll = async (req, res) => {
 
       res.json({
         ok: true,
-        vehiculos,
+        data: vehiculos,
       });
     });
 };
@@ -83,7 +83,7 @@ const fecthVehiculoID = async (req, res) => {
 
     res.json({
       ok: true,
-      vehiculo: vehiculoDB,
+      data: vehiculoDB,
     });
   });
 };
@@ -115,10 +115,15 @@ const updateVehiculo = async (req, res) => {
       });
     }
 
-    vehiculoDB.marca = body.marca;
-    vehiculoDB.modelo = body.modelo;
-    vehiculoDB.ano = body.ano;
-    vehiculoDB.kilometraje = body.kilometraje;
+    vehiculoDB.marca = body.marca ? body.marca : vehiculoDB.marca;
+    vehiculoDB.modelo = body.modelo ? body.modelo : vehiculoDB.modelo;
+    vehiculoDB.ano = body.ano ? body.ano : vehiculoDB.ano;
+    vehiculoDB.kilometraje = body.kilometraje
+      ? body.kilometraje
+      : vehiculoDB.kilometraje;
+    vehiculoDB.disponible = body.disponible
+      ? body.disponible
+      : vehiculoDB.disponible;
 
     await vehiculoDB.save((err, vehiculoGuardado) => {
       if (err) {
@@ -130,7 +135,7 @@ const updateVehiculo = async (req, res) => {
 
       res.json({
         ok: true,
-        vehiculo: vehiculoGuardado,
+        data: vehiculoGuardado,
         message: "El Vehiculo se actualizo con exito",
       });
     });
@@ -172,7 +177,7 @@ const deleteVehiculo = async (req, res) => {
 
       res.json({
         ok: true,
-        vehiculo: vehiculoBorrado,
+        data: vehiculoBorrado,
         message: "El Vehiculo se ha eliminado con exito",
       });
     });
@@ -188,9 +193,8 @@ const searchVehiculo = async (req, res) => {
 
   let regex = new RegExp(termino, "i");
 
-  await Vehiculo.find({ modelo: regex })
-    .populate("vehiculos", "modelo")
-    .exec((err, vehiculos) => {
+  await Vehiculo.find({ modelo: regex, disponible: true }).exec(
+    (err, vehiculos) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -200,9 +204,10 @@ const searchVehiculo = async (req, res) => {
 
       res.json({
         ok: true,
-        vehiculos,
+        data: vehiculos,
       });
-    });
+    }
+  );
 };
 module.exports = {
   createVehiculo,

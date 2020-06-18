@@ -38,7 +38,7 @@ const register = async (req, res) => {
       }
       return res.json({
         ok: true,
-        usuario: usuarioDB,
+        data: usuarioDB,
         message: "El usuario se creo correctamente ",
       });
     });
@@ -84,7 +84,7 @@ const loginEmail = async (req, res) => {
 
     res.json({
       ok: true,
-      usuario: usuarioDB,
+      data: usuarioDB,
       token,
     });
   });
@@ -176,7 +176,7 @@ const loginGoogle = async (req, res) => {
 
         return res.json({
           ok: true,
-          usuario: usuarioDB,
+          data: usuarioDB,
           token,
         });
       });
