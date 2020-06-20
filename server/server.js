@@ -10,8 +10,13 @@ const app = express();
 
 const bodyParser = require("body-parser");
 
-app.use(cors());
+app.use(cors("*"));
 app.use(morgan("tiny"));
+// habilitar la carpeta public
+app.use("/", express.static(path.resolve(__dirname, "../public")));
+
+// Configuración global de rutas
+app.use("/api", require("./routes/index"));
 
 mongoose.connect(process.env.URLDB, (err, res) => {
   if (err) throw err;
