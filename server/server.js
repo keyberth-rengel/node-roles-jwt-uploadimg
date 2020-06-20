@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, "../public")));
 
 // Configuración global de rutas
-app.use("/api", require("./routes/index"));
+app.use("api", require("./routes/index"));
 
 app.listen(process.env.PORT, () => {
   console.log("Escuchando puerto: ", process.env.PORT);

@@ -29,7 +29,7 @@ let urlDB;
 
 if (process.env.NODE_ENV === "dev") {
   urlDB = "mongodb://localhost:27017/admin";
-  key27143528;
+
   // urlDB =
   // "mongodb+srv://keyberth-rengel:key27143528@cluster0-xlrc9.mongodb.net/test";
 } else {
