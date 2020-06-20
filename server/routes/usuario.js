@@ -11,11 +11,11 @@ const {
   searchUsuarios,
 } = require("../controllers/usuariosController");
 
-const router = express.Router();
+const app = express();
 // ===========================
 //  todos los Usuarios
 // ===========================
-router.get(
+app.get(
   "/usuarios",
   // verificaToken,
   fetchUsuarios
@@ -23,7 +23,7 @@ router.get(
 // ===========================
 //  Actualizar Usuarios
 // ===========================
-router.put(
+app.put(
   "/usuario/:id",
   // [verificaToken, verificaAdmin_Role],
   updateUsuario
@@ -31,7 +31,7 @@ router.put(
 // ===========================
 //  eliminar Usuarios
 // ===========================
-router.delete(
+app.delete(
   "/usuario/:id",
   // [verificaToken, verificaAdmin_Role]
   deleteUsuario
@@ -39,10 +39,10 @@ router.delete(
 // ===========================
 //  Buscar Usuarios
 // ===========================
-router.get(
+app.get(
   "/usuarios/buscar/:termino",
   // verificaToken,
   searchUsuarios
 );
 
-module.exports = router;
+module.exports = app;
