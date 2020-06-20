@@ -6,9 +6,9 @@ let servicioSchema = new Schema({
     type: String,
     required: [true, "La Categoria del servicio en necesaria"],
   },
-  subCategoria: {
+  servicio: {
     type: String,
-    required: [true, "La Sub-Categoria del servicio en necesaria"],
+    required: [true, "El Nombre del servicio en necesaria"],
   },
   precio: {
     type: String,

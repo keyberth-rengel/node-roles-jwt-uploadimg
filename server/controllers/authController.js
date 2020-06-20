@@ -57,7 +57,7 @@ const loginEmail = async (req, res) => {
     }
 
     if (!usuarioDB) {
-      return res.status(400).json({
+      return res.status(404).json({
         ok: false,
         err: {
           message: "Usuario o contraseña incorrectos",
@@ -66,7 +66,7 @@ const loginEmail = async (req, res) => {
     }
 
     if (!bcrypt.compareSync(body.password, usuarioDB.password)) {
-      return res.status(400).json({
+      return res.status(404).json({
         ok: false,
         err: {
           message: "Usuario o contraseña incorrectos",

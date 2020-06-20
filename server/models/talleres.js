@@ -26,11 +26,11 @@ var talleresSchema = new Schema({
     required: false,
   },
   horario: {
-    type: [String],
+    type: String,
     required: [true, "El Horario del taller es requerido"],
   },
   numero: {
-    type: [String],
+    type: String,
     required: [true, "El Numero del taller es requerido"],
   },
 });

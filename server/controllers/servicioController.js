@@ -8,7 +8,7 @@ const createServicio = async (req, res) => {
 
   let servicio = new Servicio({
     categoria: body.categoria,
-    subCategoria: body.subcategoria,
+    servicio: body.servicio,
     precio: body.precio,
     tiempo: body.tiempo,
   });
@@ -118,9 +118,7 @@ const updateServicio = async (req, res) => {
     servicioDB.categoria = body.categoria
       ? body.categoria
       : servicioDB.categoria;
-    servicioDB.subCategoria = body.subcategoria
-      ? body.subcategoria
-      : servicioDB.subcategoria;
+    servicioDB.servicio = body.servicio ? body.servicio : servicioDB.servicio;
     servicioDB.precio = body.precio ? body.precio : servicioDB.precio;
     servicioDB.tiempo = body.tiempo ? body.tiempo : servicioDB.tiempo;
     servicioDB.disponible = body.disponible
@@ -195,7 +193,7 @@ const searchServicio = async (req, res) => {
 
   let regex = new RegExp(termino, "i");
 
-  await Servicio.find({ subCategoria: regex, disponible: true }).exec(
+  await Servicio.find({ servicio: regex, disponible: true }).exec(
     (err, servicios) => {
       if (err) {
         return res.status(500).json({
