@@ -11,7 +11,7 @@ const fetchUsuarios = async (req, res) => {
   let limite = req.query.limite || 5;
   limite = Number(limite);
 
-  await Usuario.find({ estado: true })
+  Usuario.find({ estado: true })
     .skip(desde)
     // .limit(limite)
     .exec(async (err, usuarios) => {
@@ -22,7 +22,7 @@ const fetchUsuarios = async (req, res) => {
         });
       }
 
-      await Usuario.count({ estado: true }, (err, conteo) => {
+      Usuario.count({ estado: true }, (err, conteo) => {
         res.json({
           ok: true,
           data: usuarios,
