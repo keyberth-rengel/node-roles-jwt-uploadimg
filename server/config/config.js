@@ -1,7 +1,8 @@
 // ============================
 //  Puerto
 // ============================
-process.env.PORT = process.env.PORT || 5050;
+process.env.PORT = process.env.PORT;
+// || 5050;
 
 // ============================
 //  Entorno
