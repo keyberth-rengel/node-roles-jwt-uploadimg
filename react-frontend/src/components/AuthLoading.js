@@ -12,13 +12,13 @@ function AuthLoading(props) {
   const auth = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (auth.token) {
+    if (!auth.token) {
+      dispatch(loading(localStorage.getItem("token")));
+    } else if (auth.token) {
       dispatch(fetchVehiculosAction());
       dispatch(fetchUsersAction());
       dispatch(fetchServiciosAction());
       dispatch(fetchTalleresAction());
-    } else if (!auth.token) {
-      dispatch(loading(localStorage.getItem("token")));
     }
   }, [auth.token, dispatch]);
 

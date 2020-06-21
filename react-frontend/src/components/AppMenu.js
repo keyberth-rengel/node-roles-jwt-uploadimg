@@ -22,20 +22,12 @@ function AppMenu() {
 
   return (
     <div className="left-side-menu">
-      <div className="media user-profile mt-2 mb-2">
-        <img
-          src={perfile}
-          className="avatar-sm rounded-circle mr-2"
-          alt="Perfil"
-        />
-        <img
-          src={perfile}
-          className="avatar-xs rounded-circle mr-2"
-          alt="Perfil"
-        />
+      <div className="media user-profile mt-2 mb-2 d-flex justify-content-center">
+        <img src={perfile} className="avatar-sm rounded-circle" alt="Perfil" />
+        <img src={perfile} className="avatar-xs rounded-circle" alt="Perfil" />
 
-        <div className="media-body">
-          <h6 className="pro-user-name mt-0 mb-0">Panel</h6>
+        <div className="media-body ml-2">
+          <h6 className="pro-user-name mt-0 mb-0 ">Panel</h6>
           <span className="pro-user-desc">Administrador</span>
         </div>
         <div className="dropdown align-self-center profile-dropdown-menu">
@@ -128,35 +120,8 @@ function AppMenu() {
                 {/* <span className="menu-arrow"></span> */}
               </MenuItem>
             </li>
-            {/* 
-            <li className="menu-active-drawer">
-              <MenuItem component={Link} to="/driverearning">
-                <i className="fas fa-hand-holding-usd"></i>
-                <span> {languageJson.driver_earning} </span>
-              </MenuItem>
-            </li>
-
-            <li className="menu-active-drawer">
-              <MenuItem component={Link} to="/promos">
-                <i className="fas fa-percent"></i>
-                <span> {languageJson.promo} </span>
-              </MenuItem>
-            </li>
-
-            <li className="menu-active-drawer">
-              <MenuItem component={Link} to="/referral">
-                <i className="fas fa-ticket-alt"></i>
-                <span> {languageJson.refferal_bonus} </span>
-              </MenuItem>
-            </li>
-
-            <li className="menu-active-drawer">
-              <MenuItem component={Link} to="/notifications">
-                <i className="far fa-comments"></i>
-                <span> {languageJson.push_notification_title}</span>
-              </MenuItem>
-            </li> */}
           </ul>
+          ;
         </div>
         {/* <!-- End Sidebar --> */}
 

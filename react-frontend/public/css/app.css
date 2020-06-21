@@ -74,15 +74,15 @@ body {
 }
 
 .content-page {
-  margin-left: 250px;
+  margin-left: 200px;
   overflow: hidden;
-  padding: 0px 12.5px 5px 12.5px;
+  /* padding: 0px 12.5px 5px 12.5px; */
   min-height: 80vh;
   margin-top: 72px;
 }
 
 .left-side-menu {
-  width: 250px;
+  width: 230px;
   background: #ffffff;
   bottom: 0;
   padding: 0 0 30px 0;
@@ -400,10 +400,10 @@ body {
 .left-side-menu-condensed .left-side-menu #sidebar-menu > ul ul li.active a {
   color: #c8cddc;
 }
-
+/* 
 .left-side-menu-condensed .user-profile {
   padding: 15px;
-}
+} */
 .left-side-menu-condensed .user-profile .avatar-sm {
   display: none;
 }
@@ -423,7 +423,7 @@ body {
 }
 
 .left-side-menu-condensed .content-page {
-  margin-left: 70px !important;
+  margin-left: 50px !important;
 }
 
 .left-side-menu-condensed .footer {
@@ -434,11 +434,11 @@ body {
   display: none;
 }
 
-@media (min-width: 769px) {
+/* @media (min-width: 769px) {
   body.left-side-menu-condensed {
     min-height: 1200px;
   }
-}
+} */
 
 @media (max-width: 1024px) {
   .left-side-menu {
@@ -465,7 +465,7 @@ body {
   }
   .content-page,
   .left-side-menu-condensed .content-page {
-    margin-left: 0 !important;
+    /* margin-left: 0 !important; */
     padding: 0 10px;
   }
   .pro-user-name {
@@ -1104,7 +1104,7 @@ body[data-layout="topnav"] .profile-dropdown {
 
 @media (min-width: 992px) {
   body[data-layout="topnav"] .container-fluid {
-    max-width: 85%;
+    max-width: 90%;
   }
   body[data-layout="topnav"] .navbar-custom .logo {
     display: block;
@@ -1121,7 +1121,7 @@ body[data-layout="topnav"] .profile-dropdown {
     display: none !important;
   }
   body[data-layout="topnav"].boxed-layout .container-fluid {
-    max-width: 97%;
+    max-width: 100%;
   }
   .topbar-nav .metismenu {
     -webkit-box-orient: horizontal;

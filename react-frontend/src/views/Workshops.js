@@ -25,22 +25,22 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }));
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Workshops() {
   const classes = useStyles();
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
+
   const [data, setData] = useState([]);
   const workshops = useSelector((state) => state.workshops);
   const dispatch = useDispatch();
-
+  const [openModal, setOpenModal] = useState(false);
   const [form, setForm] = useState({
     ejecutar: "",
     idEliminar: "",
     alert: "",
     msjAlert: "",
-    modal: false,
   });
   const [nuevoSer, setNuevoSer] = useState({
     nombre: "",
@@ -54,10 +54,7 @@ export default function Workshops() {
     numero: "",
   });
   const handleClose = () => {
-    setForm({
-      ...form,
-      modal: false,
-    });
+    setOpenModal(false);
     setForm({
       ejecutar: "",
       idEliminar: "",
@@ -76,7 +73,6 @@ export default function Workshops() {
   // ============Añadir
   const crearTaller = (e) => {
     e.preventDefault();
-    // console.log("nuevo servicio: ", nuevoSer);
     const {
       nombre,
       servicio,
@@ -126,6 +122,7 @@ export default function Workshops() {
           alert: "alert-success",
           msjAlert: `Se Añadio un Nuevo Taller Correctamente`,
         });
+        setOpenModal(false);
       }, 600);
       setTimeout(() => {
         setForm({
@@ -200,8 +197,6 @@ export default function Workshops() {
     }
 
     new Promise((resolve) => {
-      console.log("nuevo", nuevoSer);
-      console.log("editable", oldEditar);
       setTimeout(() => {
         resolve();
         const tblData = data;
@@ -212,6 +207,7 @@ export default function Workshops() {
           alert: "alert-success",
           msjAlert: `El Taller se ha modificado Correctamente`,
         });
+        setOpenModal(false);
       }, 600);
       setTimeout(() => {
         setForm({
@@ -239,7 +235,7 @@ export default function Workshops() {
       <Dialog
         fullWidth={true}
         maxWidth="xs"
-        open={form.modal}
+        open={openModal}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
         TransitionComponent={Transition}
@@ -270,7 +266,7 @@ export default function Workshops() {
 
         <DialogContent className="p-0">
           <div className=" d-flex justify-content-center col-12 ">
-            <form className="my-4 col-sm-10 col-md-8">
+            <form className="my-4 col-10 ">
               <div className="form-row">
                 <div className="form-group col-12">
                   <label for="inputEmail4">Nombre del Taller</label>
@@ -412,7 +408,7 @@ export default function Workshops() {
 
       {/* Fin del formulario */}
 
-      <div className="row">
+      <div className="row mx-5">
         {/* =======alerta */}
         {form.alert ? (
           <div
@@ -432,9 +428,11 @@ export default function Workshops() {
                 <button
                   type="buttom"
                   className="btn btn-success btn-sm ml-4"
-                  onClick={() =>
-                    setForm({ ...form, ejecutar: "nuevo", modal: true })
-                  }
+                  onClick={() => {
+                    setForm({ ...form, ejecutar: "nuevo" });
+
+                    setOpenModal(true);
+                  }}
                 >
                   Añadir Taller
                 </button>
@@ -465,12 +463,18 @@ export default function Workshops() {
                         <tr key={item._id}>
                           <td>{item.nombre}</td>
                           <td>{item.email}</td>
+                          <td>{item.email}</td>
                           {/* <td>{item.servicio}</td> */}
+                          <td>{item.ubicacion}</td>
                           <td>{item.ubicacion}</td>
                           {/* <td>{item.horarios}</td> */}
                           <td>{item.numero}</td>{" "}
                           <td>
-                            <a href={item.img} target="_blank">
+                            <a
+                              href={item.img}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               <img
                                 alt={item.nombre}
                                 src={item.img}
@@ -495,8 +499,8 @@ export default function Workshops() {
                                 setForm({
                                   ...form,
                                   ejecutar: "editar",
-                                  modal: true,
                                 });
+                                setOpenModal(true);
                               }}
                             >
                               Editar

@@ -46,19 +46,19 @@ function ResponsiveDrawer(props) {
               to="/"
               className="navbar-brand mr-0 mr-md-2 logo"
             >
-              <span className="logo-lg">
-                <img src={logo} alt="" width="50" />
+              <span className="logo-lg d-flex align-items-center">
+                <img src={logo} alt="" width="100" />
                 <span className="d-inline h5 ml-1">Automotriz</span>
               </span>
               <span className="logo-sm">
-                <img src={logo} alt="" height="60" />
+                <img src={logo} alt="" width="100" />
               </span>
             </MenuItem>
 
             <ul className="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0">
               <li className="">
                 <button className="button-menu-mobile open-left disable-btn">
-                  <img src={logo} alt="" height="60" />
+                  <img src={logo} alt="" width="100" />
                 </button>
               </li>
             </ul>

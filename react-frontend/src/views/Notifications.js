@@ -44,7 +44,6 @@ export default function Notifications() {
   // ============Añadir
   const crearServicio = (e) => {
     e.preventDefault();
-    // console.log("nuevo servicio: ", nuevoSer);
     const { devicetype, usertype, title, body } = nuevoSer;
     if (devicetype === "" && usertype === "" && title === "" && body === "") {
       setForm({
@@ -212,7 +211,6 @@ export default function Notifications() {
                 <label for="inputEmail4">Dispositivos</label>
                 <select
                   onChange={(e) => {
-                    console.log(e.target.value);
                     return setNuevoSer({
                       ...nuevoSer,
                       devicetype: e.target.value,
@@ -230,7 +228,6 @@ export default function Notifications() {
                 <label for="inputPassword4">Tipo de Usuarios</label>
                 <select
                   onChange={(e) => {
-                    console.log(e.target.value);
                     return setNuevoSer({
                       ...nuevoSer,
                       usertype: e.target.value,
@@ -315,7 +312,6 @@ export default function Notifications() {
                 <label for="inputEmail4">Dispositivos</label>
                 <select
                   onChange={(e) => {
-                    console.log(e.target.value);
                     return setEditarSer({
                       ...editarSer,
                       devicetype: e.target.value,
@@ -334,7 +330,6 @@ export default function Notifications() {
                 <label for="inputPassword4">Tipo de Usuarios</label>
                 <select
                   onChange={(e) => {
-                    console.log(e.target.value);
                     return setEditarSer({
                       ...editarSer,
                       usertype: e.target.value,

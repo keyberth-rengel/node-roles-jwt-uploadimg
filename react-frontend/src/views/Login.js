@@ -25,7 +25,6 @@ const Login = (props) => {
   };
 
   const handleSubmit = (e) => {
-    console.log("desde submit");
     e.preventDefault();
     dispatch(loginAction({ email, password }));
     // dispatch(signIn(email, password));
@@ -41,16 +40,13 @@ const Login = (props) => {
                 <div className="card-body p-0">
                   <div className="row">
                     <div className="col-md-6 p-5">
-                      <div className="mx-auto mb-5">
+                      <div className="mx-auto d-flex justify-content-center p-0 m-0">
                         <a href="index.html">
-                          <img src={logo} alt="Asodex Taxi Admin" width="60" />
-                          <h3 className="d-inline align-middle ml-1 text-logo">
-                            Asodex
-                          </h3>
+                          <img src={logo} alt="Admin" width="180" />
                         </a>
                       </div>
 
-                      <h6 className="h5 mb-0 mt-4">¡Bienvenido!</h6>
+                      <h6 className="h5 mb-0 p-0">¡Bienvenido!</h6>
                       <p className="text-muted mt-1 mb-4">
                         Por favor ingrese su correo electronico y se contraseña
                         para acceder al panel admin

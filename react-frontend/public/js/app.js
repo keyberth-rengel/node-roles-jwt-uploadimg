@@ -7,21 +7,21 @@ Contact: support@coderthemes.com
 File: Main Js File
 */
 
-!(function($) {
+!(function ($) {
   "use strict";
 
-  var Components = function() {};
+  var Components = function () {};
 
   //initializing tooltip
-  (Components.prototype.initTooltipPlugin = function() {
+  (Components.prototype.initTooltipPlugin = function () {
     $.fn.tooltip && $('[data-toggle="tooltip"]').tooltip();
   }),
     //initializing popover
-    (Components.prototype.initPopoverPlugin = function() {
+    (Components.prototype.initPopoverPlugin = function () {
       $.fn.popover && $('[data-toggle="popover"]').popover();
     }),
     //initializing Slimscroll
-    (Components.prototype.initSlimScrollPlugin = function() {
+    (Components.prototype.initSlimScrollPlugin = function () {
       //You can change the color of scroll bar here
       $.fn.slimScroll &&
         $(".slimscroll").slimScroll({
@@ -29,12 +29,12 @@ File: Main Js File
           position: "right",
           size: "4px",
           touchScrollStep: 20,
-          color: "#9ea5ab"
+          color: "#9ea5ab",
         });
     }),
     //initializing form validation
-    (Components.prototype.initFormValidation = function() {
-      $(".needs-validation").on("submit", function(event) {
+    (Components.prototype.initFormValidation = function () {
+      $(".needs-validation").on("submit", function (event) {
         $(this).addClass("was-validated");
         if ($(this)[0].checkValidity() === false) {
           event.preventDefault();
@@ -45,7 +45,7 @@ File: Main Js File
       });
     }),
     //initilizing
-    (Components.prototype.init = function() {
+    (Components.prototype.init = function () {
       var $this = this;
       this.initTooltipPlugin(),
         this.initPopoverPlugin(),
@@ -55,17 +55,17 @@ File: Main Js File
     ($.Components = new Components()),
     ($.Components.Constructor = Components);
 })(window.jQuery),
-  (function($) {
+  (function ($) {
     "use strict";
 
-    var App = function() {
+    var App = function () {
       (this.$body = $("body")), (this.$window = $(window));
     };
 
     /**
     Resets the scroll
     */
-    (App.prototype._resetSidebarScroll = function() {
+    (App.prototype._resetSidebarScroll = function () {
       // sidebar - scroll container
       $(".slimscroll-menu").slimscroll({
         height: "auto",
@@ -73,17 +73,17 @@ File: Main Js File
         size: "4px",
         color: "#9ea5ab",
         wheelStep: 5,
-        touchScrollStep: 20
+        touchScrollStep: 20,
       });
     }),
       /**
        * Initlizes the menu - top and sidebar
        */
-      (App.prototype.initMenu = function() {
+      (App.prototype.initMenu = function () {
         var $this = this;
 
         // Left menu collapse
-        $(".button-menu-mobile").on("click", function(event) {
+        $(".button-menu-mobile").on("click", function (event) {
           event.preventDefault();
 
           var layout = $this.$body.data("layout");
@@ -113,33 +113,15 @@ File: Main Js File
             // sidebar - scroll container
             $this._resetSidebarScroll();
 
-            $("#menu-bar a").each(function() {
+            $("#menu-bar a").each(function () {
               var pageUrl = window.location.href.split(/[?#]/)[0];
               if (this.href == pageUrl) {
                 $(this).addClass("active");
-                $(this)
-                  .parent()
-                  .addClass("mm-active"); // add active to li of the current link
-                $(this)
-                  .parent()
-                  .parent()
-                  .addClass("mm-show");
-                $(this)
-                  .parent()
-                  .parent()
-                  .prev()
-                  .addClass("active"); // add active class to an anchor
-                $(this)
-                  .parent()
-                  .parent()
-                  .parent()
-                  .addClass("mm-active");
-                $(this)
-                  .parent()
-                  .parent()
-                  .parent()
-                  .parent()
-                  .addClass("mm-show"); // add active to li of the current link
+                $(this).parent().addClass("mm-active"); // add active to li of the current link
+                $(this).parent().parent().addClass("mm-show");
+                $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
+                $(this).parent().parent().parent().addClass("mm-active");
+                $(this).parent().parent().parent().parent().addClass("mm-show"); // add active to li of the current link
                 $(this)
                   .parent()
                   .parent()
@@ -152,7 +134,7 @@ File: Main Js File
           } else {
             var menuRef = new MetisMenu("#menu-bar").on(
               "shown.metisMenu",
-              function(event) {
+              function (event) {
                 window.addEventListener("click", function menuClick(e) {
                   if (!event.target.contains(e.target)) {
                     menuRef.hide(event.detail.shownElement);
@@ -161,23 +143,13 @@ File: Main Js File
                 });
               }
             );
-            $("#menu-bar a").each(function() {
+            $("#menu-bar a").each(function () {
               var pageUrl = window.location.href.split(/[?#]/)[0];
               if (this.href == pageUrl) {
                 $(this).addClass("active");
-                $(this)
-                  .parent()
-                  .addClass("active"); // add active to li of the current link
-                $(this)
-                  .parent()
-                  .parent()
-                  .prev()
-                  .addClass("active"); // add active class to an anchor
-                $(this)
-                  .parent()
-                  .parent()
-                  .parent()
-                  .addClass("active");
+                $(this).parent().addClass("active"); // add active to li of the current link
+                $(this).parent().parent().prev().addClass("active"); // add active class to an anchor
+                $(this).parent().parent().parent().addClass("active");
                 $(this)
                   .parent()
                   .parent()
@@ -191,11 +163,11 @@ File: Main Js File
         }
 
         // right side-bar toggle
-        $(".right-bar-toggle").on("click", function(e) {
+        $(".right-bar-toggle").on("click", function (e) {
           $("body").toggleClass("right-bar-enabled");
         });
 
-        $(document).on("click", "body", function(e) {
+        $(document).on("click", "body", function (e) {
           if ($(e.target).closest(".right-bar-toggle, .right-bar").length > 0) {
             return;
           }
@@ -245,17 +217,15 @@ File: Main Js File
         // });
 
         // Preloader
-        $(window).on("load", function() {
+        $(window).on("load", function () {
           $("#status").fadeOut();
-          $("#preloader")
-            .delay(350)
-            .fadeOut("slow");
+          $("#preloader").delay(350).fadeOut("slow");
         });
       }),
       /**
        * Init the layout - with broad sidebar or compact side bar
        */
-      (App.prototype.initLayout = function() {
+      (App.prototype.initLayout = function () {
         // in case of small size, add class enlarge to have minimal menu
         // if (this.$window.width() >= 768 && this.$window.width() <= 1024) {
         if (this.$window.width() <= 800) {
@@ -272,13 +242,13 @@ File: Main Js File
         }
       }),
       //initilizing
-      (App.prototype.init = function() {
+      (App.prototype.init = function () {
         var $this = this;
         this.initLayout();
         this.initMenu();
         $.Components.init();
         // on window resize, make menu flipped automatically
-        $this.$window.on("resize", function(e) {
+        $this.$window.on("resize", function (e) {
           e.preventDefault();
           $this.initLayout();
           $this._resetSidebarScroll();
@@ -291,7 +261,7 @@ File: Main Js File
       ($.App.Constructor = App);
   })(window.jQuery),
   //initializing main application module
-  (function($) {
+  (function ($) {
     "use strict";
     $.App.init();
   })(window.jQuery);

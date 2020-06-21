@@ -25,21 +25,23 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }));
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Cars() {
   const classes = useStyles();
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
+
   const [data, setData] = useState([]);
   const cars = useSelector((state) => state.cars);
   const dispatch = useDispatch();
+
+  const [openModal, setOpenModal] = useState(false);
   const [form, setForm] = useState({
     ejecutar: "",
     idEliminar: "",
     alert: "",
     msjAlert: "",
-    modal: false,
   });
   const [nuevoSer, setNuevoSer] = useState({
     kilometraje: "",
@@ -49,10 +51,7 @@ export default function Cars() {
     ano: "",
   });
   const handleClose = () => {
-    setForm({
-      ...form,
-      modal: false,
-    });
+    setOpenModal(false);
     setForm({
       ejecutar: "",
       idEliminar: "",
@@ -107,6 +106,7 @@ export default function Cars() {
           alert: "alert-success",
           msjAlert: `Se Añadio un Nuevo Vehiculo Correctamente`,
         });
+        setOpenModal(false);
       }, 600);
       setTimeout(() => {
         setForm({
@@ -171,8 +171,6 @@ export default function Cars() {
     }
 
     new Promise((resolve) => {
-      console.log("nuevo", nuevoSer);
-      console.log("editable", oldEditar);
       setTimeout(() => {
         resolve();
         const tblData = data;
@@ -183,6 +181,8 @@ export default function Cars() {
           alert: "alert-success",
           msjAlert: `El Vehiculo se ha modificado Correctamente`,
         });
+
+        setOpenModal(false);
       }, 600);
       setTimeout(() => {
         setForm({
@@ -203,7 +203,7 @@ export default function Cars() {
       <Dialog
         fullWidth={true}
         maxWidth="xs"
-        open={form.modal}
+        open={openModal}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
         TransitionComponent={Transition}
@@ -236,7 +236,7 @@ export default function Cars() {
 
         <DialogContent className="p-0">
           <div className=" d-flex justify-content-center col-12 ">
-            <form className="my-4 col-sm-10 col-md-8">
+            <form className="my-4 col-10">
               <div className="form-row">
                 <div className="form-group col-12">
                   <label for="inputEmail4">Marca del vehiculo</label>
@@ -323,7 +323,7 @@ export default function Cars() {
                 </div>
               </div>
 
-              <div className="d-flex justify-content-around">
+              {/* <div className="d-flex justify-content-around">
                 <button
                   type="submit"
                   className="btn btn-danger"
@@ -341,7 +341,7 @@ export default function Cars() {
                 <button type="submit" className="btn btn-primary">
                   {form.ejecutar === "editar" ? "Editar" : "Nuevo"}
                 </button>
-              </div>
+              </div> */}
             </form>
           </div>
         </DialogContent>
@@ -349,7 +349,7 @@ export default function Cars() {
 
       {/* Fin del formulario */}
 
-      <div className="row">
+      <div className="row mx-5">
         {/* =======alerta */}
         {form.alert ? (
           <div
@@ -369,9 +369,10 @@ export default function Cars() {
                 <button
                   type="buttom"
                   className="btn btn-success btn-sm ml-4"
-                  onClick={() =>
-                    setForm({ ...form, ejecutar: "nuevo", modal: true })
-                  }
+                  onClick={() => {
+                    setForm({ ...form, ejecutar: "nuevo" });
+                    setOpenModal(true);
+                  }}
                 >
                   Añadir Vehiculo
                 </button>
@@ -423,8 +424,8 @@ export default function Cars() {
                                 setForm({
                                   ...form,
                                   ejecutar: "editar",
-                                  modal: true,
                                 });
+                                setOpenModal(true);
                               }}
                             >
                               Editar

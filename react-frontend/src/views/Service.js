@@ -25,21 +25,22 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
 }));
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 export default function Service() {
   const classes = useStyles();
-  const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-  });
+
   const [data, setData] = useState([]);
   const services = useSelector((state) => state.services);
   const dispatch = useDispatch();
+  const [openModal, setOpenModal] = useState(false);
   const [form, setForm] = useState({
     ejecutar: "",
     idEliminar: "",
     alert: "",
     msjAlert: "",
-    modal: false,
   });
   const [nuevoSer, setNuevoSer] = useState({
     categoria: "",
@@ -49,10 +50,7 @@ export default function Service() {
     disponible: true,
   });
   const handleClose = () => {
-    setForm({
-      ...form,
-      modal: false,
-    });
+    setOpenModal(false);
     setForm({
       ejecutar: "",
       idEliminar: "",
@@ -71,7 +69,6 @@ export default function Service() {
   // ============Añadir
   const crearVehiculo = (e) => {
     e.preventDefault();
-    // console.log("nuevo servicio: ", nuevoSer);
     const { categoria, servicio, precio, tiempo, disponible } = nuevoSer;
     if (
       categoria === "" &&
@@ -107,6 +104,7 @@ export default function Service() {
           alert: "alert-success",
           msjAlert: `Se Añadio un Nuevo Vehiculo Correctamente`,
         });
+        setOpenModal(false);
       }, 600);
       setTimeout(() => {
         setForm({
@@ -146,7 +144,7 @@ export default function Service() {
   // ========editarServicio
   const editarVehiculo = (e) => {
     e.preventDefault();
-    const { kilometraje, disponible, marca, modelo, ano } = nuevoSer;
+    const { categoria, servicio, precio, tiempo, disponible } = nuevoSer;
     if (
       categoria === "" &&
       servicio === "" &&
@@ -171,8 +169,6 @@ export default function Service() {
     }
 
     new Promise((resolve) => {
-      console.log("nuevo", nuevoSer);
-      console.log("editable", oldEditar);
       setTimeout(() => {
         resolve();
         const tblData = data;
@@ -183,6 +179,7 @@ export default function Service() {
           alert: "alert-success",
           msjAlert: `El Vehiculo se ha modificado Correctamente`,
         });
+        setOpenModal(false);
       }, 600);
       setTimeout(() => {
         setForm({
@@ -203,7 +200,7 @@ export default function Service() {
       <Dialog
         fullWidth={true}
         maxWidth="xs"
-        open={form.modal}
+        open={openModal}
         onClose={handleClose}
         aria-labelledby="max-width-dialog-title"
         TransitionComponent={Transition}
@@ -236,7 +233,7 @@ export default function Service() {
 
         <DialogContent className="p-0">
           <div className=" d-flex justify-content-center col-12 ">
-            <form className="my-4 col-sm-10 col-md-8">
+            <form className="my-4 col-10">
               <div className="form-row">
                 <div className="form-group col-12">
                   <label for="inputEmail4">Categoria del Servicio</label>
@@ -302,7 +299,7 @@ export default function Service() {
                     }}
                   />
                 </div>
-                <div className="form-group col-12">
+                <div className="form-group col-12 ">
                   <div className="custom-control custom-switch">
                     <input
                       type="checkbox"
@@ -349,7 +346,7 @@ export default function Service() {
 
       {/* Fin del formulario */}
 
-      <div className="row">
+      <div className="row mx-5">
         {/* =======alerta */}
         {form.alert ? (
           <div
@@ -369,9 +366,11 @@ export default function Service() {
                 <button
                   type="buttom"
                   className="btn btn-success btn-sm ml-4"
-                  onClick={() =>
-                    setForm({ ...form, ejecutar: "nuevo", modal: true })
-                  }
+                  onClick={() => {
+                    setForm({ ...form, ejecutar: "nuevo" });
+
+                    setOpenModal(true);
+                  }}
                 >
                   Añadir Servicio
                 </button>
@@ -423,8 +422,9 @@ export default function Service() {
                                 setForm({
                                   ...form,
                                   ejecutar: "editar",
-                                  modal: true,
                                 });
+
+                                setOpenModal(true);
                               }}
                             >
                               Editar

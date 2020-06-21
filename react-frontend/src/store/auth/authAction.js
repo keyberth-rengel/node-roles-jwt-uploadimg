@@ -9,8 +9,8 @@ import {
 } from "./authReducer";
 import { REGISTER, REGISTER_SUCCESS, REGISTER_ERROR } from "./authReducer";
 
-export const loading = (tokenLocal) => (dispatch) => {
-  dispatch({
+export const loading = (tokenLocal) => async (dispatch) => {
+  await dispatch({
     type: LOADING,
     payload: {
       token: tokenLocal,

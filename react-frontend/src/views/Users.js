@@ -43,7 +43,11 @@ export default function Users() {
                         <td>{item.nombre}</td>
                         <td>{item.email}</td>
                         <td>
-                          <a href={item.img} target="_blank">
+                          <a
+                            href={item.img}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
                             <img
                               alt={item.nombre}
                               src={item.img}
