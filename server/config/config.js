@@ -33,9 +33,7 @@ if (process.env.NODE_ENV === "dev") {
   //   // urlDB =
   //   //   "mongodb+srv://keyberth-rengel:key27143528@cluster0-xlrc9.mongodb.net/test";
 } else {
-  // urlDB = process.env.URLDB;
-  urlDB =
-    "mongodb+srv://keyberth-rengel:key27143528@cluster0-0s7nk.mongodb.net/";
+  urlDB = process.env.URLDB;
   // urlDB = process.env.MONGO_URI;
 }
 process.env.URLDB = urlDB;
