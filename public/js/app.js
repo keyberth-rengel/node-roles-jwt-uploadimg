@@ -67,14 +67,14 @@ File: Main Js File
     */
     (App.prototype._resetSidebarScroll = function () {
       // sidebar - scroll container
-      $(".slimscroll-menu").slimscroll({
-        height: "auto",
-        position: "right",
-        size: "4px",
-        color: "#9ea5ab",
-        wheelStep: 5,
-        touchScrollStep: 20,
-      });
+      // $(".slimscroll-menu").slimscroll({
+      //   height: "auto",
+      //   position: "right",
+      //   size: "4px",
+      //   color: "#9ea5ab",
+      //   wheelStep: 5,
+      //   touchScrollStep: 20,
+      // });
     }),
       /**
        * Initlizes the menu - top and sidebar
@@ -255,7 +255,7 @@ File: Main Js File
         });
 
         // feather
-        feather.replace();
+        // feather.replace();
       }),
       ($.App = new App()),
       ($.App.Constructor = App);
