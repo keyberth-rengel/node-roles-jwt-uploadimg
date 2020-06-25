@@ -1,19 +1,16 @@
-let Servicio = require("../models/servicio");
+let Categoria = require("../models/categorie");
 
 // ===========================
-//  Crear un nuevo servicio
+//  Crear un nuevo categoria
 // ===========================
-const createServicio = async (req, res) => {
+const createCategoria = async (req, res) => {
   let body = req.body;
 
-  let servicio = new Servicio({
-    categoria: body.categoria,
-    servicio: body.servicio,
-    precio: body.precio,
-    tiempo: body.tiempo,
+  let categoria = new Categoria({
+    nombre: body.nombre,
   });
 
-  await servicio.save((err, servicioDB) => {
+  await categoria.save((err, categoriaDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -23,25 +20,24 @@ const createServicio = async (req, res) => {
 
     res.status(201).json({
       ok: true,
-      data: servicioDB,
-      message: "El Servicio se creo con exito",
+      data: categoriaDB,
+      message: "La categoria se creo con exito",
     });
   });
 };
 
 // ===========================
-//  Obtener servicios
+//  Obtener Categorias
 // ===========================
 
-const fetchServiciosAll = async (req, res) => {
+const fetchCategoriasAll = async (req, res) => {
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
-  await Servicio.find({ disponible: true })
+  await Categoria.find({ disponible: true })
     .skip(desde)
     // .limit(5)
-    // .populate("categoria", "diponible nombre")
-    .exec((err, servicios) => {
+    .exec((err, categorias) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -51,7 +47,7 @@ const fetchServiciosAll = async (req, res) => {
 
       res.json({
         ok: true,
-        data: servicios,
+        data: categorias,
       });
     });
 };
@@ -60,12 +56,12 @@ const fetchServiciosAll = async (req, res) => {
 //  Obtener un servicio por ID
 // ===========================
 
-const fecthServicioID = async (req, res) => {
+const fecthCategoriaID = async (req, res) => {
   // populate: usuario categoria
   // paginado
   let id = req.params.id;
 
-  await Servicio.findById(id).exec((err, servicioDB) => {
+  await Categoria.findById(id).exec((err, categoriaDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -73,33 +69,33 @@ const fecthServicioID = async (req, res) => {
       });
     }
 
-    if (!servicioDB) {
+    if (!categoriaDB) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: "ID del servicio no existe",
+          message: "ID de la categoria no existe",
         },
       });
     }
 
     res.json({
       ok: true,
-      data: servicioDB,
+      data: categoriaDB,
     });
   });
 };
 
 // ===========================
-//  Actualizar un servicio
+//  Actualizar un categoria
 // ===========================
-const updateServicio = async (req, res) => {
+const updateCategoria = async (req, res) => {
   // grabar el usuario
   // grabar una categoria del listado
 
   let id = req.params.id;
   let body = req.body;
 
-  await Servicio.findById(id, async (err, servicioDB) => {
+  await Categoria.findById(id, async (err, categoriaDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -107,26 +103,18 @@ const updateServicio = async (req, res) => {
       });
     }
 
-    if (!servicioDB) {
+    if (!categoriaDB) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: "El ID del servicio no existe",
+          message: "El ID de la categoria no existe",
         },
       });
     }
 
-    servicioDB.categoria = body.categoria
-      ? body.categoria
-      : servicioDB.categoria;
-    servicioDB.servicio = body.servicio ? body.servicio : servicioDB.servicio;
-    servicioDB.precio = body.precio ? body.precio : servicioDB.precio;
-    servicioDB.tiempo = body.tiempo ? body.tiempo : servicioDB.tiempo;
-    servicioDB.disponible = body.disponible
-      ? body.disponible
-      : servicioDB.disponible;
+    categoriaDB.nombre = body.nombre ? body.nombre : categoriaDB.nombre;
 
-    await servicioDB.save((err, servicioGuardado) => {
+    await categoriaDB.save((err, categoriaGuardado) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -136,20 +124,20 @@ const updateServicio = async (req, res) => {
 
       res.json({
         ok: true,
-        data: servicioGuardado,
-        message: "El Servicio se actualizo con exito",
+        data: categoriaGuardado,
+        message: "La Categoria se actualizo con exito",
       });
     });
   });
 };
 
 // ===========================
-//  Borrar un servicio
+//  Borrar un Categoria
 // ===========================
-const deleteServicio = async (req, res) => {
+const deleteCategoria = async (req, res) => {
   let id = req.params.id;
 
-  await Servicio.findById(id, async (err, servicioDB) => {
+  await Categoria.findById(id, async (err, categoriaDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -157,18 +145,18 @@ const deleteServicio = async (req, res) => {
       });
     }
 
-    if (!servicioDB) {
+    if (!categoriaDB) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: "El ID del servicio no existe",
+          message: "El ID de la categoria no existe",
         },
       });
     }
 
-    servicioDB.disponible = false;
+    categoriaDB.disponible = false;
 
-    await servicioDB.save((err, servicioBorrado) => {
+    await categoriaDB.save((err, categoriaBorrado) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -178,24 +166,24 @@ const deleteServicio = async (req, res) => {
 
       res.json({
         ok: true,
-        data: servicioBorrado,
-        message: "El Servicio se ha eliminado con exito",
+        data: categoriaBorrado,
+        message: "La categoria se ha eliminado con exito",
       });
     });
   });
 };
 
 // ===========================
-//  Buscar vehiculos
+//  Buscar categoria
 // ===========================
 
-const searchServicio = async (req, res) => {
+const searchCategoria = async (req, res) => {
   let termino = req.params.termino;
 
   let regex = new RegExp(termino, "i");
 
-  await Servicio.find({ servicio: regex, disponible: true }).exec(
-    (err, servicios) => {
+  await Categoria.find({ nombre: regex, disponible: true }).exec(
+    (err, categorias) => {
       if (err) {
         return res.status(500).json({
           ok: false,
@@ -205,16 +193,16 @@ const searchServicio = async (req, res) => {
 
       res.json({
         ok: true,
-        data: servicios,
+        data: categorias,
       });
     }
   );
 };
 module.exports = {
-  createServicio,
-  fetchServiciosAll,
-  fecthServicioID,
-  updateServicio,
-  deleteServicio,
-  searchServicio,
+  createCategoria,
+  fecthCategoriaID,
+  fetchCategoriasAll,
+  updateCategoria,
+  deleteCategoria,
+  searchCategoria,
 };

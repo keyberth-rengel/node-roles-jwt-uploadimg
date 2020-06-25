@@ -45,7 +45,7 @@ const fetchTalleresAll = async (req, res) => {
   await Talleres.find({ disponible: true })
     .skip(desde)
     // .limit(20)
-    .populate("servicio", "diponible categoria subCategoria precio tiempo")
+    // .populate("servicio", "diponible categoria subCategoria precio tiempo")
     .exec((err, talleres) => {
       if (err) {
         return res.status(500).json({

@@ -16,7 +16,7 @@ var talleresSchema = new Schema({
   },
   disponible: { type: Boolean, required: true, default: true },
 
-  servicio: [{ type: Schema.Types.ObjectId, ref: "Servicio", required: true }],
+  servicio: { type: Array, required: true },
   ubicacion: {
     type: String,
     required: false,

@@ -2,10 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 let servicioSchema = new Schema({
-  categoria: {
-    type: String,
-    required: [true, "La Categoria del servicio en necesaria"],
-  },
+  // categoria: { type: Schema.Types.ObjectId, ref: "Categorie", required: true },
+  categoria: { type: String, required: true },
   servicio: {
     type: String,
     required: [true, "El Nombre del servicio en necesaria"],
