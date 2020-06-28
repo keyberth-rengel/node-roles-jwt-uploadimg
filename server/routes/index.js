@@ -9,6 +9,7 @@ app.use(require("./servicio"));
 app.use(require("./usuario"));
 app.use(require("./talleres"));
 app.use(require("./categorie"));
+app.use(require("./reservaciones"));
 
 app.use(require("./upload"));
 app.use(require("./imagenes"));
