@@ -9,7 +9,6 @@ const createServicio = async (req, res) => {
   let servicio = new Servicio({
     categoria: body.categoria,
     servicio: body.servicio,
-    precio: body.precio,
     tiempo: body.tiempo,
   });
 
@@ -120,7 +119,6 @@ const updateServicio = async (req, res) => {
       ? body.categoria
       : servicioDB.categoria;
     servicioDB.servicio = body.servicio ? body.servicio : servicioDB.servicio;
-    servicioDB.precio = body.precio ? body.precio : servicioDB.precio;
     servicioDB.tiempo = body.tiempo ? body.tiempo : servicioDB.tiempo;
     servicioDB.disponible = body.disponible
       ? body.disponible

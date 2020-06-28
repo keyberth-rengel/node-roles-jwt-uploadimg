@@ -8,10 +8,6 @@ let servicioSchema = new Schema({
     type: String,
     required: [true, "El Nombre del servicio en necesaria"],
   },
-  precio: {
-    type: String,
-    required: [true, "El Precio del servicio es necesario"],
-  },
   tiempo: {
     type: String,
     required: [true, "El Tiempo estimado es necesario"],
