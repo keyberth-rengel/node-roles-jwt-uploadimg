@@ -11,6 +11,7 @@ const createReservacion = async (req, res) => {
     taller: body.taller,
     servicio: body.servicio,
     vehiculo: body.vehiculo,
+    costo: body.costo,
     hora: body.hora,
     dia: body.dia,
     estado: "pendiente",
@@ -130,6 +131,7 @@ const updateReservacion = async (req, res) => {
     reservacionDB.hora = body.hora ? body.hora : reservacionDB.hora;
     reservacionDB.dia = body.dia ? body.dia : reservacionDB.dia;
     reservacionDB.estado = body.estado ? body.estado : reservacionDB.estado;
+    reservacionDB.costo = body.costo ? body.costo : reservacionDB.costo;
 
     await reservacionDB.save((err, reservacionGuardado) => {
       if (err) {

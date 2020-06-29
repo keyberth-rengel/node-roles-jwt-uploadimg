@@ -30,6 +30,13 @@ let reservacionesSchema = new Schema({
       "El Vehiculo es necesario para poder agendar una reservación",
     ],
   },
+  costo: {
+    type: String,
+    required: [
+      true,
+      "La Costo es necesario para poder agendar una reservación",
+    ],
+  },
   hora: {
     type: String,
     required: [true, "La hora es necesario para poder agendar una reservación"],
@@ -44,6 +51,7 @@ let reservacionesSchema = new Schema({
       true,
       "El Estado es necesario para poder agendar una reservación",
     ],
+    default: "pendiente",
   },
 });
 
