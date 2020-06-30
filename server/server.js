@@ -13,6 +13,7 @@ const bodyParser = require("body-parser");
 app.use(cors());
 app.use(morgan("tiny"));
 
+//conectando con la db
 mongoose.connect(process.env.URLDB, (err, res) => {
   if (err) throw err;
 
