@@ -54,9 +54,12 @@ const fetchTalleresAll = async (req, res) => {
         });
       }
 
-      res.json({
-        ok: true,
-        data: talleres,
+      Talleres.count({ disponible: true }, (err, conteo) => {
+        res.json({
+          ok: true,
+          total: conteo,
+          data: talleres,
+        });
       });
     });
 };

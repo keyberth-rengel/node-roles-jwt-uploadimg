@@ -44,10 +44,12 @@ const fetchCategoriasAll = async (req, res) => {
           err,
         });
       }
-
-      res.json({
-        ok: true,
-        data: categorias,
+      Categoria.count({}, (err, conteo) => {
+        res.json({
+          ok: true,
+          total: conteo,
+          data: categorias,
+        });
       });
     });
 };

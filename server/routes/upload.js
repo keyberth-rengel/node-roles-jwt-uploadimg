@@ -3,7 +3,7 @@ const fileUpload = require("express-fileupload");
 const app = express();
 
 const Usuario = require("../models/usuario");
-// const Producto = require('../models/producto');
+const Talleres = require("../models/talleres");
 
 const fs = require("fs");
 const path = require("path");
@@ -13,7 +13,7 @@ app.use(fileUpload());
 
 app.put("/upload/:tipo/:id", function (req, res) {
   let tipo = req.params.tipo;
-  let id = req.params.id;
+  let id = req.params.id === "talleres" ? tipo : req.params.id;
 
   if (!req.files) {
     return res.status(400).json({
@@ -25,7 +25,7 @@ app.put("/upload/:tipo/:id", function (req, res) {
   }
 
   // Valida tipo
-  let tiposValidos = ["productos", "usuarios"];
+  let tiposValidos = ["talleres", "usuarios"];
   if (tiposValidos.indexOf(tipo) < 0) {
     return res.status(400).json({
       ok: false,
@@ -66,9 +66,9 @@ app.put("/upload/:tipo/:id", function (req, res) {
 
     // Aqui, imagen cargada
     if (tipo === "usuarios") {
-      imagenUsuario(id, res, nombreArchivo);
+      imagenUsuario(id, res, nombreArchivo, "usuarios");
     } else {
-      imagenProducto(id, res, nombreArchivo);
+      imagenTalleres(id, res, nombreArchivo, "talleres");
     }
   });
 });
@@ -90,7 +90,7 @@ function imagenUsuario(id, res, nombreArchivo) {
       return res.status(400).json({
         ok: false,
         err: {
-          message: "Usuaro no existe",
+          message: `usuarios no existe`,
         },
       });
     }
@@ -102,55 +102,60 @@ function imagenUsuario(id, res, nombreArchivo) {
     usuarioDB.save((err, usuarioGuardado) => {
       res.json({
         ok: true,
-        usuario: usuarioGuardado,
+        data: usuarioGuardado,
         img: nombreArchivo,
       });
     });
   });
 }
+function imagenTalleres(id, res, nombreArchivo) {
+  let pathObsoluto = path.resolve(
+    __dirname,
+    `../../uploads/talleres/${nombreArchivo}`
+  );
+  if (id === "talleres") {
+    return res.json({
+      ok: true,
+      img: pathObsoluto,
+    });
+  }
+  Talleres.findById(id, (err, tallerDB) => {
+    if (err) {
+      borraArchivo(nombreArchivo, "talleres");
 
-// function imagenProducto(id, res, nombreArchivo) {
+      return res.status(500).json({
+        ok: false,
+        err,
+      });
+    }
 
-//     Producto.findById(id, (err, productoDB) => {
+    if (!tallerDB) {
+      borraArchivo(nombreArchivo, "talleres");
 
-//         if (err) {
-//             borraArchivo(nombreArchivo, 'productos');
+      return res.status(400).json({
+        ok: false,
+        tallerDB,
 
-//             return res.status(500).json({
-//                 ok: false,
-//                 err
-//             });
-//         }
+        err: {
+          err,
+          message: `taller no existe`,
+        },
+      });
+    }
 
-//         if (!productoDB) {
+    borraArchivo(tallerDB.img, "talleres");
 
-//             borraArchivo(nombreArchivo, 'productos');
+    tallerDB.img = pathObsoluto;
 
-//             return res.status(400).json({
-//                 ok: false,
-//                 err: {
-//                     message: 'Usuaro no existe'
-//                 }
-//             });
-//         }
-
-//         borraArchivo(productoDB.img, 'productos')
-
-//         productoDB.img = nombreArchivo;
-
-//         productoDB.save((err, productoGuardado) => {
-
-//             res.json({
-//                 ok: true,
-//                 producto: productoGuardado,
-//                 img: nombreArchivo
-//             });
-
-//         });
-
-//     });
-
-// }
+    tallerDB.save((err, tallerGuardado) => {
+      res.json({
+        ok: true,
+        data: tallerGuardado,
+        img: pathObsoluto,
+      });
+    });
+  });
+}
 
 function borraArchivo(nombreImagen, tipo) {
   let pathImagen = path.resolve(

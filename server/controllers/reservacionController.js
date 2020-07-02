@@ -52,10 +52,12 @@ const fetchReservacionesAll = async (req, res) => {
           err,
         });
       }
-
-      res.json({
-        ok: true,
-        data: reservaciones,
+      Reservacion.count({}, (err, conteo) => {
+        res.json({
+          ok: true,
+          total: conteo,
+          data: reservaciones,
+        });
       });
     });
 };

@@ -8,7 +8,10 @@ var talleresSchema = new Schema({
     required: [true, "El nombre del taller es necesario"],
   },
   descripcion: { type: String, required: false },
-  img: { type: String, required: false },
+  img: {
+    type: String,
+    required: false,
+  },
   email: {
     type: String,
     unique: true,

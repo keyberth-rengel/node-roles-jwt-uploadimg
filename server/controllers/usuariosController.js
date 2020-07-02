@@ -25,8 +25,8 @@ const fetchUsuarios = async (req, res) => {
       Usuario.count({ estado: true }, (err, conteo) => {
         res.json({
           ok: true,
-          data: usuarios,
           total: conteo,
+          data: usuarios,
         });
       });
     });

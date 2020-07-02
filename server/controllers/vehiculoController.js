@@ -48,9 +48,12 @@ const fetchVehiculosAll = async (req, res) => {
         });
       }
 
-      res.json({
-        ok: true,
-        data: vehiculos,
+      Vehiculo.count({ disponible: true }, (err, conteo) => {
+        res.json({
+          ok: true,
+          total: conteo,
+          data: vehiculos,
+        });
       });
     });
 };

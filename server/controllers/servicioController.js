@@ -48,9 +48,12 @@ const fetchServiciosAll = async (req, res) => {
         });
       }
 
-      res.json({
-        ok: true,
-        data: servicios,
+      Servicio.count({ disponible: true }, (err, conteo) => {
+        res.json({
+          ok: true,
+          total: conteo,
+          data: servicios,
+        });
       });
     });
 };
