@@ -28,6 +28,7 @@ app.use(bodyParser.json());
 
 // habilitar la carpeta public
 app.use("/", express.static(path.resolve(__dirname, "../public")));
+app.use("/uploads/img", express.static(path.resolve(__dirname, "../uploads")));
 
 // Configuración global de rutas
 app.use("/api", require("./routes/index"));

@@ -74,6 +74,7 @@ app.put("/upload/:tipo/:id", function (req, res) {
 });
 
 function imagenUsuario(id, res, nombreArchivo) {
+  let pathObsoluto = `/uploads/img/talleres/${nombreArchivo}`;
   Usuario.findById(id, (err, usuarioDB) => {
     if (err) {
       borraArchivo(nombreArchivo, "usuarios");
@@ -97,22 +98,19 @@ function imagenUsuario(id, res, nombreArchivo) {
 
     borraArchivo(usuarioDB.img, "usuarios");
 
-    usuarioDB.img = nombreArchivo;
+    usuarioDB.img = pathObsoluto;
 
     usuarioDB.save((err, usuarioGuardado) => {
       res.json({
         ok: true,
         data: usuarioGuardado,
-        img: nombreArchivo,
+        img: pathObsoluto,
       });
     });
   });
 }
 function imagenTalleres(id, res, nombreArchivo) {
-  let pathObsoluto = path.resolve(
-    __dirname,
-    `../../uploads/talleres/${nombreArchivo}`
-  );
+  let pathObsoluto = `/uploads/img/talleres/${nombreArchivo}`;
   if (id === "talleres") {
     return res.json({
       ok: true,
